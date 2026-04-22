@@ -4,13 +4,13 @@ on:
   workflow_dispatch:
 
 env:
-  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2023.04.21/riscv32-glibc-ubuntu-22.04-nightly-2023.04.21-nightly.tar.gz
-  BUSYBOX_URL: https://busybox.net/downloads/busybox-1.36.0.tar.bz2
-  BUSYBOX_DIRNAME: busybox-1.36.0
+  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.11.22/riscv64-uclibc-ng-ubuntu-24.04-gcc-nightly-2024.11.22-nightly.tar.xz
+  BUSYBOX_URL: https://busybox.net/downloads/busybox-1.37.0.tar.bz2
+  BUSYBOX_DIRNAME: busybox-1.37.0
 
 jobs:
   build:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     permissions:
       contents: write
