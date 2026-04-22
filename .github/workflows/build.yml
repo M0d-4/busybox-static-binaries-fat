@@ -1,20 +1,20 @@
 name: Build busybox and git auto commit
-
+ 
 on:
   workflow_dispatch:
-
+ 
 env:
   RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.09.03/riscv64-musl-ubuntu-22.04-gcc-nightly-2024.09.03-nightly.tar.gz
   BUSYBOX_URL: https://busybox.net/downloads/busybox-1.37.0.tar.bz2
   BUSYBOX_DIRNAME: busybox-1.37.0
-
+ 
 jobs:
   build:
     runs-on: ubuntu-22.04
-
+ 
     permissions:
       contents: write
-
+ 
     steps:
       - uses: actions/checkout@v3
         with:
@@ -44,6 +44,8 @@ jobs:
           cd build
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-x86_64-linux-gnu"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-x86_64-linux-gnu"
@@ -58,6 +60,8 @@ jobs:
           export CROSS_COMPILE=aarch64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -72,6 +76,8 @@ jobs:
           export CROSS_COMPILE=arm-linux-gnueabi-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -86,6 +92,8 @@ jobs:
           export CROSS_COMPILE=arm-linux-gnueabihf-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -100,6 +108,8 @@ jobs:
           export CROSS_COMPILE=mips-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -114,6 +124,8 @@ jobs:
           export CROSS_COMPILE=mipsel-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -128,6 +140,8 @@ jobs:
           export CROSS_COMPILE=mips64-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -142,6 +156,8 @@ jobs:
           export CROSS_COMPILE=mips64el-linux-gnuabi64-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -156,6 +172,8 @@ jobs:
           export CROSS_COMPILE=powerpc64le-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -170,6 +188,8 @@ jobs:
           export CROSS_COMPILE=riscv32-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -184,6 +204,8 @@ jobs:
           export CROSS_COMPILE=riscv64-linux-gnu-
           make KBUILD_SRC="../$BUSYBOX_DIRNAME" -f "../$BUSYBOX_DIRNAME/Makefile" defconfig
           sed -e 's/.*\<CONFIG_STATIC\>.*/CONFIG_STATIC=y/' -i .config
+          sed -e 's/.*CONFIG_SHA1_HWACCEL.*/# CONFIG_SHA1_HWACCEL is not set/' -i .config
+          sed -e 's/.*CONFIG_SHA256_HWACCEL.*/# CONFIG_SHA256_HWACCEL is not set/' -i .config
           make -j$(($(nproc)+1))
           cp busybox "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
           chmod +x "$GITHUB_WORKSPACE/main/busybox-${CROSS_COMPILE::-1}"
@@ -207,3 +229,4 @@ jobs:
       - uses: stefanzweifel/git-auto-commit-action@v4
         with:
           repository: ./main
+ 
