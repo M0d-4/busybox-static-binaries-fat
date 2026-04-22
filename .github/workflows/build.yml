@@ -4,7 +4,7 @@ on:
   workflow_dispatch:
 
 env:
-  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.11.22/riscv64-uclibc-ng-ubuntu-22.04-gcc-nightly-2024.11.22-nightly.tar.xz
+  RISCV32_TOOLCHAIN_URL: https://github.com/riscv-collab/riscv-gnu-toolchain/releases/download/2024.09.03/riscv64-musl-ubuntu-22.04-gcc-nightly-2024.09.03-nightly.tar.gz
   BUSYBOX_URL: https://busybox.net/downloads/busybox-1.37.0.tar.bz2
   BUSYBOX_DIRNAME: busybox-1.37.0
 
